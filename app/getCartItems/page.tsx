@@ -4,16 +4,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/store";
 import { removeItemFromCart, clearCart } from "../Redux/cartSlice";
 
+interface CartItem {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  quantity: number;
+}
+
+
 export default function Cart() {
   const [isOpen, setIsOpen] = useState(false); 
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const dispatch = useDispatch();
 
   const handleRemove = (id: number) => {
     dispatch(removeItemFromCart(id));
   };
 
-  const handleClose = () => setIsOpen(false); 
+  const handleClose = () => setIsOpen(false);
 
   return (
     <div>
@@ -35,7 +44,7 @@ export default function Cart() {
             </button>
 
             {cartItems.length > 0 ? (
-              cartItems.map((item: any) => (
+              cartItems.map((item: CartItem) => (
                 <div key={item.id} className="bg-gray-100 p-4 mb-4">
                   <h1 className="text-black">{item.title}</h1>
                   <p className="text-blue-800">{item.description}</p>

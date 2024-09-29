@@ -2,8 +2,18 @@
 import { useEffect, useState } from "react";
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const [product, setProduct] = useState<any>(null);
+  const {id } = params;
+  interface Product {
+    id: number;
+    title: string,
+    category: string,
+    name: string;
+    price: number;
+    description?: string;
+  }
+  
+  const [product, setProduct] = useState<Product | null>(null);
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
